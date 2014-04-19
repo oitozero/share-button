@@ -68,19 +68,28 @@ $.fn.share = (opts) ->
 
     set_opt = (base,ext) -> if opts[base] then opts[base][ext] || config[ext] else config[ext]
 
-    config.twitter_url     = set_opt('twitter', 'url')
-    config.twitter_text    = set_opt('twitter', 'text')
-    config.fb_url          = set_opt('facebook', 'url')
-    config.fb_title        = set_opt('facebook', 'title')
-    config.fb_caption      = set_opt('facebook', 'caption')
-    config.fb_text         = set_opt('facebook', 'text')
-    config.fb_image        = set_opt('facebook', 'image')
-    config.gplus_url       = set_opt('gplus', 'url')
-    config.pinterest_url   = set_opt('pinterest', 'url')
-    config.pinterest_image = set_opt('pinterest', 'image')
-    config.pinterest_text  = set_opt('pinterest', 'text')
-    config.mail_url        = set_opt('mail', 'url')
-    config.mail_text       = set_opt('mail', 'text')
+    config.twitter_enabled    = set_opt('twitter', 'enabled')
+    config.twitter_url        = set_opt('twitter', 'url')
+    config.twitter_text       = set_opt('twitter', 'text')
+    
+    config.fb_enabled         = set_opt('facebook', 'enabled')
+    config.fb_url             = set_opt('facebook', 'url')
+    config.fb_title           = set_opt('facebook', 'title')
+    config.fb_caption         = set_opt('facebook', 'caption')
+    config.fb_text            = set_opt('facebook', 'text')
+    config.fb_image           = set_opt('facebook', 'image')
+
+    config.gplus_enabled      = set_opt('gplus', 'enabled')
+    config.gplus_url          = set_opt('gplus', 'url')
+
+    config.pinterest_enabled  = set_opt('pinterest', 'enabled')
+    config.pinterest_url      = set_opt('pinterest', 'url')
+    config.pinterest_image    = set_opt('pinterest', 'image')
+    config.pinterest_text     = set_opt('pinterest', 'text')
+
+    config.mail_enabled       = set_opt('mail', 'enabled')
+    config.mail_url           = set_opt('mail', 'url')
+    config.mail_text          = set_opt('mail', 'text')
 
     #############
     ## PRIVATE ##
@@ -132,8 +141,22 @@ $.fn.share = (opts) ->
     ###############
     # Inject HTML #
     ###############
+    
+    config.buttons = ""
+    config.buttons += "<li class='entypo-twitter' data-network='twitter'></li>"  if config.twitter_enabled
+    config.buttons += "<li class='entypo-facebook' data-network='facebook'></li>"  if config.fb_enabled
+    config.buttons += "<li class='entypo-gplus' data-network='gplus'></li>"  if config.gplus_enabled
+    config.buttons += "<li class='entypo-pinterest' data-network='pinterest'></li>"  if config.pinterest_enabled
+    config.buttons += "<li class='entypo-paper-plane' data-network='mail'></li>"  if config.mail_enabled
 
-    $(@).html("<label class='entypo-#{config.button_icon}'><span>#{config.button_text}</span></label><div class='social #{config.flyout}'><ul><li class='entypo-pinterest' data-network='pinterest'></li><li class='entypo-twitter' data-network='twitter'></li><li class='entypo-facebook' data-network='facebook'></li><li class='entypo-gplus' data-network='gplus'></li><li class='entypo-paper-plane' data-network='mail'></li></ul></div>")
+    #config.buttons = ""
+    #config.buttons = config.buttons + config.twitter_enabled ? "<li class='entypo-twitter' data-network='twitter'></li>" : ""
+    #config.buttons = config.buttons + config.fb_enabled ? "<li class='entypo-facebook' data-network='facebook'></li>" : ""
+    #config.buttons = config.buttons + config.gplus_enabled ? "<li class='entypo-gplus' data-network='gplus'></li>" : ""
+    #config.buttons = config.buttons + config.pinterest_enabled ? "<li class='entypo-pinterest' data-network='pinterest'></li>" : ""
+    #config.buttons = config.buttons + config.mail_enabled ? "<li class='entypo-paper-plane' data-network='mail'></li>" : ""
+    
+    $(@).html("<label class='entypo-#{config.button_icon}'><span>#{config.button_text}</span></label><div class='social #{config.flyout}'><ul>#{config.buttons}</ul></div>")
 
 
     #######################
